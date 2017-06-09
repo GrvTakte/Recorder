@@ -1,26 +1,14 @@
 package com.demo.recorder.recorder;
 
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Camera;
 import android.media.AudioFormat;
-import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.os.IBinder;
-import android.provider.SyncStateContract;
-import android.support.annotation.IntDef;
-import android.support.annotation.Nullable;
-import android.util.Log;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.widget.Toast;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Random;
 
 /**
