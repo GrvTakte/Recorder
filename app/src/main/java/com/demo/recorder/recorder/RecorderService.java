@@ -28,14 +28,10 @@ public class RecorderService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-
         try {
             recorder = new MediaRecorder();
             int audioSource;
-
-                recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-
+            recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 
             recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
             recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
@@ -50,11 +46,9 @@ public class RecorderService extends Service {
             recorder.prepare();
             recorder.start();
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return START_STICKY;
     }
     public String CreateRandomAudioFileName(int string){
@@ -87,15 +81,10 @@ public class RecorderService extends Service {
         try {
             recorder.stop();
             recorder.release();
-            recorder = null;
-            notificationManager.cancel(0123456);
         } catch (Exception e) {
             e.printStackTrace();
-
         }
     }
-
-
 }
 
 

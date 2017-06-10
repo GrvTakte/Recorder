@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="16dp"
@@ -8,47 +13,110 @@
     android:paddingRight="16dp"
     android:paddingTop="16dp"
     >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/linear_layout_one"
+    android:background="#AD5656">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RECORD AUDIO WHILE APPLICATION IS IN BACKGROUND STATE"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="START RECORDING"
         android:id="@+id/start"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="37dp"
         android:onClick="playAudio"
         />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="STOP RECORDING"
-        android:layout_toRightOf="@+id/start"
         android:id="@+id/stop"
-        android:layout_alignTop="@+id/start"
-        android:layout_centerHorizontal="true"
-        android:onClick="stopAudio"/>
+        android:onClick="stopAudio"
+        android:layout_marginBottom="10dp"/>
 
-    <Button
+</LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/linear_layout_two"
+        android:layout_below="@+id/linear_layout_one"
+        android:layout_marginTop="20dp"
+        android:background="#EF5656">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PLAY MUSIC WHILE APPLICATION IS IN BACKGROUND STATE"/>
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="START MUSIC"
+            android:id="@+id/start_music"
+            android:onClick="playMusic"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="STOP MUSIC"
+            android:id="@+id/stop_music"
+            android:onClick="stopMusic"
+            android:layout_marginBottom="10dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/linear_layout_three"
+        android:layout_below="@+id/linear_layout_two"
+        android:layout_marginTop="20dp"
+        android:background="#CB4511">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RECORD VIDEO WHILE APPLICATION IS IN BACKGROUND STATE"/>
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RECORD VIDEO"
+            android:id="@+id/start_video"
+            android:onClick="playVideo"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/stop_video"
+            android:text="STOP VIDEO RECORDING"
+            android:layout_marginBottom="10dp"
+            android:onClick="stopVideo"/>
+
+    </LinearLayout>
+
+    <SurfaceView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="START MUSIC"
-        android:id="@+id/start_music"
-        android:layout_marginTop="11dp"
-        android:onClick="playMusic"
-        android:layout_below="@+id/start"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="STOP MUSIC"
-        android:id="@+id/stop_music"
-        android:onClick="stopMusic"
-        android:layout_alignBaseline="@+id/start_music"
-        android:layout_alignBottom="@+id/start_music"
-        android:layout_toRightOf="@+id/start_music"
-        android:layout_toEndOf="@+id/start_music" />
+        android:id="@+id/surface_view"
+        android:layout_below="@+id/linear_layout_three"/>
 
 </RelativeLayout>
+</ScrollView>
