@@ -1,9 +1,7 @@
 package com.demo.recorder.recorder;
 
-import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
-import android.media.AudioFormat;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.os.IBinder;
@@ -17,10 +15,7 @@ import java.util.Random;
 
 public class RecorderService extends Service {
     private static final int RECORDER_SAMPLERATE = 8000;
-    private static final int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
-    private static final int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
     private MediaRecorder recorder;
-    private NotificationManager notificationManager;
     String RandomAudioFileName = "ABCDEFGHIJKLMNOP";
 
     public RecorderService() {
@@ -51,6 +46,7 @@ public class RecorderService extends Service {
         }
         return START_STICKY;
     }
+
     public String CreateRandomAudioFileName(int string){
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder( string );
