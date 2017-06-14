@@ -2,9 +2,11 @@ package com.demo.recorder.recorder;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -34,6 +36,10 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
         mSurfaceHolder = mSurfaceView.getHolder();
         mSurfaceHolder.addCallback(this);
         mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+
+        CheckService check = new CheckService();
+        check.onReceive(this);
+
     }
 
     public void playAudio(View v){
@@ -125,5 +131,19 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
     private void requestPermission(){
         ActivityCompat.requestPermissions(MainActivity.this, new
                 String[]{WRITE_EXTERNAL_STORAGE, RECORD_AUDIO, CAMERA}, RequestPermissionCode);
+    }
+
+    private class CheckService extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+            for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)){
+                if (CameraService.class.getName().equals(service.service.getClassName())){
+                        Toast.makeText(getApplicationContext(),"Camera Service Started",Toast.LENGTH_LONG).show();
+                }else {
+                        Toast.makeText(getApplicationContext(),"Service is not starting yet!",Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 }
