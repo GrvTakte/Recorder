@@ -10,6 +10,7 @@ import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.os.IBinder;
+import android.support.annotation.IntDef;
 import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
@@ -72,6 +73,12 @@ public class CameraService extends Service implements SurfaceHolder.Callback {
 
         }
         mediaRecorder.start();
+
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return Service.START_STICKY;
     }
 
     // Stop recording and remove SurfaceView
@@ -86,7 +93,8 @@ public class CameraService extends Service implements SurfaceHolder.Callback {
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int format, int width, int height) {}
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int format, int width, int height) {
+    }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {}
