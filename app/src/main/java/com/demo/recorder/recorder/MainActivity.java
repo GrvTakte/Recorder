@@ -2,26 +2,23 @@ package com.demo.recorder.recorder;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.List;
-
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.RECORD_AUDIO;
+import static android.Manifest.permission.SYSTEM_ALERT_WINDOW;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 
@@ -41,7 +38,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
         mSurfaceHolder.addCallback(this);
         mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
-        checkService();
+        checkDrawOverlayPermission();
     }
 
 
@@ -63,29 +60,9 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
         stopService(intent);
     }
 
-
-    public void playMusic(View v){
-        if (checkPermission()) {
-            Toast.makeText(getApplicationContext(), "Music Started", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(MainActivity.this, MusicService.class);
-            startService(intent);
-        }else{
-            requestPermission();
-        }
-    }
-
-
-    public void stopMusic(View v){
-        Toast.makeText(getApplicationContext(),"Music stopped",Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(MainActivity.this, MusicService.class);
-        stopService(intent);
-    }
-
-
     public void playVideo(View view){
         if (checkPermission()) {
-            //Toast.makeText(getApplicationContext(), "Video Recording started", Toast.LENGTH_LONG).show();
-            checkService();
+            Toast.makeText(getApplicationContext(), "Video Recording started", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(MainActivity.this, CameraService.class);
             startService(intent);
         }else{
@@ -123,8 +100,10 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
                 if (grantResults.length> 0) {
                     boolean StoragePermission = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                     boolean RecordPermission = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                    boolean CameraPermission = grantResults[2] == PackageManager.PERMISSION_GRANTED;
+                    boolean WindowPermission = grantResults[3] == PackageManager.PERMISSION_GRANTED;
 
-                    if (StoragePermission && RecordPermission) {
+                    if (StoragePermission && RecordPermission && CameraPermission) {
                         Toast.makeText(MainActivity.this, "Permission Granted",
                                 Toast.LENGTH_LONG).show();
                     } else {
@@ -140,15 +119,41 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
         int result = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int result1 = ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.RECORD_AUDIO);
         int result2 = ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.CAMERA);
-        return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED && result2 == PackageManager.PERMISSION_GRANTED;
+       int result3 = ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.SYSTEM_ALERT_WINDOW);
+        return (result == PackageManager.PERMISSION_GRANTED) && (result1 == PackageManager.PERMISSION_GRANTED) && (result2 == PackageManager.PERMISSION_GRANTED);
     }
 
 
     private void requestPermission(){
-        ActivityCompat.requestPermissions(MainActivity.this, new String[]{WRITE_EXTERNAL_STORAGE, RECORD_AUDIO, CAMERA}, RequestPermissionCode);
+        ActivityCompat.requestPermissions(MainActivity.this, new String[]{WRITE_EXTERNAL_STORAGE, RECORD_AUDIO, CAMERA, SYSTEM_ALERT_WINDOW}, RequestPermissionCode);
     }
 
+    public final static int REQUEST_CODE = -1010101;
 
+    public void checkDrawOverlayPermission() {
+        /** check if we already  have permission to draw over other apps */
+            if (!Settings.canDrawOverlays(this)) {
+                /** if not construct intent to request permission */
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" + getPackageName()));
+                /** request permission via start activity for result */
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,  Intent data) {
+        /** check if received result code
+         is equal our requested code for draw permission  */
+        if (requestCode == REQUEST_CODE) {
+
+            if (Settings.canDrawOverlays(this)) {
+                // continue here - permission was granted
+            }
+        }
+    }
+
+/*
     private class CheckService extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -183,5 +188,5 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
             Toast.makeText(getApplicationContext(),"Service is not started yet",Toast.LENGTH_LONG).show();
         }
 
-    }
+    } */
 }

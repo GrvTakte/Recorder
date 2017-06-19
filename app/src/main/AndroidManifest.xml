@@ -22,7 +22,6 @@
             </intent-filter>
         </activity>
         <service android:name=".RecorderService" android:enabled="true"/>
-        <service android:name=".MusicService" android:enabled="true"/>
         <service android:name=".CameraService" android:enabled="true"/>
      </application>
 </manifest>

@@ -46,23 +46,26 @@ public class RecorderService extends Service {
         return START_STICKY;
     }
 
+
     public String CreateRandomAudioFileName(int string){
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder( string );
         int i = 0 ;
         while(i < string ) {
             stringBuilder.append(RandomAudioFileName.charAt(random.nextInt(RandomAudioFileName.length())));
-
             i++ ;
         }
         return stringBuilder.toString();
     }
 
 
+
     @Override
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
     }
+
+
 
     @Override
     public IBinder onBind(Intent intent) {

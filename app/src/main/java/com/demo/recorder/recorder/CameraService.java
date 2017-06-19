@@ -1,5 +1,6 @@
 package com.demo.recorder.recorder;
 
+
 import android.app.Notification;
 import android.app.Service;
 import android.content.Context;
@@ -10,18 +11,18 @@ import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.os.IBinder;
-import android.support.annotation.IntDef;
 import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
-
 import java.util.Date;
 
+
 /**
- * Created by gaurav on 10/06/17.
- */
+ * Created by Gaurav on 10/06/17.
+ **/
+
 
 public class CameraService extends Service implements SurfaceHolder.Callback {
     private WindowManager windowManager;
@@ -33,14 +34,16 @@ public class CameraService extends Service implements SurfaceHolder.Callback {
     public void onCreate() {
 
         // Start foreground service to avoid unexpected kill
+
         Notification notification = new Notification.Builder(this)
                 .setContentTitle("Background Video Recorder")
                 .setContentText("")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .build();
         startForeground(1234, notification);
-
         // Create new SurfaceView, set its size to 1x1, move it to the top left corner and set this service as a callback
+
+
         windowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
         surfaceView = new SurfaceView(this);
 
@@ -55,6 +58,7 @@ public class CameraService extends Service implements SurfaceHolder.Callback {
         surfaceView.getHolder().addCallback(this);
     }
 
+
     // Method called right after Surface created (initializing and starting MediaRecorder)
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
@@ -66,20 +70,20 @@ public class CameraService extends Service implements SurfaceHolder.Callback {
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
         mediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
-        mediaRecorder.setOutputFile(Environment.getExternalStorageDirectory()+"/"+DateFormat.format("yyyy-MM-dd_kk-mm-ss", new Date().getTime())+".mp4" );
+        mediaRecorder.setOutputFile(Environment.getExternalStorageDirectory()+"/"+DateFormat.format("yyyy-MM-dd_kk-mm-ss", new Date().getTime())+".mp4");
         try {
             mediaRecorder.prepare();
         } catch (Exception e) {
-
         }
         mediaRecorder.start();
-
     }
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return Service.START_STICKY;
     }
+
 
     // Stop recording and remove SurfaceView
     @Override
