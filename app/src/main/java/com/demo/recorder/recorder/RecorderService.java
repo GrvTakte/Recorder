@@ -1,5 +1,6 @@
 package com.demo.recorder.recorder;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaRecorder;
@@ -21,6 +22,19 @@ public class RecorderService extends Service {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+
+        Notification notification = new Notification.Builder(this)
+                .setContentTitle("Background Video Recorder")
+                .setContentText("")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .build();
+        startForeground(1234, notification);
+
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
             recorder = new MediaRecorder();
@@ -32,7 +46,7 @@ public class RecorderService extends Service {
             recorder.setAudioSamplingRate(RECORDER_SAMPLERATE);
            // Log.e("path recording", intent.getStringExtra("recording_name"));
 
-            final String filePath =Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + CreateRandomAudioFileName(5) + "AudioRecording.3gp";
+            final String filePath =Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + CreateRandomAudioFileName(5) + "AudioRecording.mp3";
             final File file = new File(filePath);
             file.getParentFile().mkdirs();
             recorder.setOutputFile(filePath);
@@ -43,9 +57,9 @@ public class RecorderService extends Service {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return START_STICKY;
     }
-
 
     public String CreateRandomAudioFileName(int string){
         Random random = new Random();
@@ -58,14 +72,10 @@ public class RecorderService extends Service {
         return stringBuilder.toString();
     }
 
-
-
     @Override
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
     }
-
-
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -84,5 +94,3 @@ public class RecorderService extends Service {
         }
     }
 }
-
-

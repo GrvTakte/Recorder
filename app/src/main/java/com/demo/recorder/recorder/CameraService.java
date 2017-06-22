@@ -5,7 +5,6 @@ import android.app.Notification;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
@@ -31,6 +30,7 @@ public class CameraService extends Service implements SurfaceHolder.Callback {
     private SurfaceView surfaceView;
     private Camera camera = null;
     private MediaRecorder mediaRecorder = null;
+
 
     @Override
     public void onCreate() {
@@ -76,6 +76,7 @@ public class CameraService extends Service implements SurfaceHolder.Callback {
         try {
             mediaRecorder.prepare();
         } catch (Exception e) {
+            e.printStackTrace();
         }
         mediaRecorder.start();
     }
@@ -83,7 +84,7 @@ public class CameraService extends Service implements SurfaceHolder.Callback {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return Service.START_STICKY;
+        return START_STICKY;
     }
 
 
