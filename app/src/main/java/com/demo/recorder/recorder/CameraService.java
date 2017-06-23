@@ -1,7 +1,9 @@
 package com.demo.recorder.recorder;
 
 
+import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +13,7 @@ import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
@@ -89,6 +92,7 @@ public class CameraService extends Service implements SurfaceHolder.Callback {
 
 
     // Stop recording and remove SurfaceView
+
     @Override
     public void onDestroy() {
         mediaRecorder.stop();
@@ -108,4 +112,14 @@ public class CameraService extends Service implements SurfaceHolder.Callback {
 
     @Override
     public IBinder onBind(Intent intent) { return null; }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        Intent intent = new Intent(getApplicationContext(),CameraService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(this,1,intent,PendingIntent.FLAG_ONE_SHOT);
+        AlarmManager alarmManager =(AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime()+1000,pendingIntent);
+
+        super.onTaskRemoved(rootIntent);
+    }
 }

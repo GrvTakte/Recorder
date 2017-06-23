@@ -90,7 +90,6 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
             Intent intent = new Intent(MainActivity.this, CameraService.class);
             startService(intent);
             setContentView(R.layout.stop_recording_video);
-            //statusText.setText("Video recording is in progress");
         }else{
             requestPermission();
         }
@@ -146,7 +145,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
         int result = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int result1 = ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.RECORD_AUDIO);
         int result2 = ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.CAMERA);
-       // int result3 = ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.SYSTEM_ALERT_WINDOW);
+       //int result3 = ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.SYSTEM_ALERT_WINDOW);
         return (result == PackageManager.PERMISSION_GRANTED) && (result1 == PackageManager.PERMISSION_GRANTED) && (result2 == PackageManager.PERMISSION_GRANTED);
     }
 
@@ -184,7 +183,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
         }
     }
 
-    
+
     private boolean isServiceStart(Class<?> serviceClass, Context context){
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         for(ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)){
