@@ -59,13 +59,13 @@ public class RecorderService extends Service {
 
             recorder.prepare();
             recorder.start();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return START_STICKY;
     }
+
 
 
     @Override
