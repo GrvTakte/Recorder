@@ -64,6 +64,10 @@ public class CameraService extends Service implements SurfaceHolder.Callback {
     }
 
 
+    /**
+     *
+     * @param surfaceHolder
+     */
     // Method called right after Surface created (initializing and starting MediaRecorder)
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
@@ -84,6 +88,14 @@ public class CameraService extends Service implements SurfaceHolder.Callback {
         mediaRecorder.start();
     }
 
+
+    /**
+     *
+     * @param intent
+     * @param flags
+     * @param startId
+     * @return
+     */
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
