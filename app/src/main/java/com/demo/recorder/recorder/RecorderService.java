@@ -27,7 +27,6 @@ public class RecorderService extends Service {
     public RecorderService() {
     }
 
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -38,9 +37,7 @@ public class RecorderService extends Service {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .build();
         startForeground(1234, notification);
-
     }
-
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -66,20 +63,16 @@ public class RecorderService extends Service {
         return START_STICKY;
     }
 
-
-
     @Override
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
     }
-
 
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }
-
 
     @Override
     public void onDestroy() {

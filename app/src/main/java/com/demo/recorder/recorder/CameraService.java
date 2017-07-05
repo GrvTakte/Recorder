@@ -19,6 +19,7 @@ import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import java.util.Date;
 
@@ -37,7 +38,6 @@ public class CameraService extends Service implements SurfaceHolder.Callback {
 
     @Override
     public void onCreate() {
-
         // Start foreground service to avoid unexpected kill
 
         Notification notification = new Notification.Builder(this)
@@ -80,6 +80,7 @@ public class CameraService extends Service implements SurfaceHolder.Callback {
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
         mediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
         mediaRecorder.setOutputFile(Environment.getExternalStorageDirectory()+"/"+DateFormat.format("yyyy-MM-dd_kk-mm-ss", new Date().getTime())+".mp4");
+
         try {
             mediaRecorder.prepare();
         } catch (Exception e) {

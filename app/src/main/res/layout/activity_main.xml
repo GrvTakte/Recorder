@@ -11,8 +11,7 @@
     android:paddingBottom="16dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:paddingTop="16dp"
-    >
+    android:paddingTop="16dp">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -24,6 +23,7 @@
         android:text=" AUDIO"
         android:textColor="#fff"
         android:textSize="25dp"
+        android:textAlignment="center"
         android:id="@+id/audio_text"
         android:background="@drawable/background_card_header"/>
 
@@ -47,19 +47,6 @@
         android:onClick="playAudio"
         android:background="@drawable/start_audio"/>
 
-  <!--  <Button
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/button_black_enable"
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:text=""
-        android:id="@+id/stop"
-        android:textColor="#fff"
-        android:onClick="stopAudio"
-        /> -->
-
 </LinearLayout>
 
 <TextView
@@ -71,7 +58,8 @@
     android:textSize="25dp"
     android:layout_below="@id/linear_layout_one"
     android:layout_marginTop="30dp"
-    android:background="@drawable/background_card_header"/>
+    android:background="@drawable/background_card_header"
+    android:textAlignment="center"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -93,18 +81,6 @@
             android:layout_marginBottom="15dp"
             android:background="@drawable/start_video"/>
 
-     <!--   <Button
-            android:background="@drawable/button_black_enable"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:id="@+id/stop_video"
-            android:text=""
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
-            android:textColor="#fff"
-            android:onClick="stopVideo"/> -->
-
     </LinearLayout>
 
     <SurfaceView
@@ -112,6 +88,15 @@
         android:layout_height="wrap_content"
         android:id="@+id/surface_view"
         android:layout_below="@+id/linear_layout_three"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_below="@+id/surface_view"
+        android:layout_marginTop="35dp"
+        android:text="All Records"
+        android:textSize="20dp"
+        android:background="#70299b2f"/>
 
 </RelativeLayout>
 </ScrollView>

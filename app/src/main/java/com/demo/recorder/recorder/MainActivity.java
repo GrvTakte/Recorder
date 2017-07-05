@@ -10,16 +10,21 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Date;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.RECORD_AUDIO;
@@ -32,7 +37,10 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
     public static SurfaceView mSurfaceView;
     public static SurfaceHolder mSurfaceHolder;
     public static final int RequestPermissionCode = 1;
+    private String video_path=Environment.getExternalStorageDirectory()+"/"+DateFormat.format("yyyy-MM-dd_kk-mm-ss", new Date().getTime())+".mp4";
+    private String audio_path=Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + DateFormat.format("yyyy-MM-dd_kk-mm-ss", new Date().getTime()) + "AudioRecording.mp3";
 
+    
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +53,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
 
         if (cameraServiceStatus){
             setContentView(R.layout.stop_recording_video);
-        }else if(audioServiceStatus) {
+        }else if(audioServiceStatus){
             setContentView(R.layout.stop_recording_audio);
         }
         else{
@@ -77,7 +85,8 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
 
 
     public void stopAudio(View v){
-        Toast.makeText(getApplicationContext(),"Audio Recording stopped",Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(),"Audio Recording stopped",Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),audio_path,Toast.LENGTH_LONG).show();
         Intent intent = new Intent(MainActivity.this, RecorderService.class);
         stopService(intent);
         setContentView(R.layout.activity_main);
@@ -97,7 +106,8 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
 
 
     public void stopVideo(View view){
-        Toast.makeText(this, "Video Recording stopped", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Video Recording stopped", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),video_path,Toast.LENGTH_LONG).show();
         Intent intent = new Intent(MainActivity.this, CameraService.class);
         stopService(intent);
         setContentView(R.layout.activity_main);
